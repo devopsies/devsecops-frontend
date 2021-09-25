@@ -1,14 +1,11 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:10'
-        }
-    }
+    agent any
 
     stages {
         stage ('Build Image') {
             steps {
                 sh 'docker build --tag my-build .'
+                sh 'docker images'
             }
         }
     }
