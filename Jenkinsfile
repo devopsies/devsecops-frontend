@@ -6,21 +6,10 @@ pipeline {
     }
 
     stages {
-        stage ('Install dependencies') {
+        stage ('Build Image') {
             steps {
-                sh 'npm install'
+                sh 'docker build --tag my-build .'
             }
-        }
-        stage ('Build'){
-            steps{
-                sh 'npm run ng build'
-            }
-        }
-    }
-
-    post {
-        always {
-            archiveArtifacts 'dist/'
         }
     }
 }
