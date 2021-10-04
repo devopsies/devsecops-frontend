@@ -1,5 +1,9 @@
-FROM node:8
-WORKDIR /app
+FROM base-front as build
+
 COPY . .
-RUN npm install
+
 RUN npm run build
+
+FROM nginx
+
+COPY --from=build /usr/src/app/dist /usr/share/nginx/html
