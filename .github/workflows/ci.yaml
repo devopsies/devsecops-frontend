@@ -10,3 +10,8 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
           docker build -t base-front -f base.Dockerfile .
+          docker build -t front-app .
+          docker run --name my-app -p 80:80 front-app
+          curl localhost
+          docker stop my-app
+          
