@@ -15,6 +15,7 @@ jobs:
       - name: "Test containerized app"
         run: |
           docker run -d --name my-app -p 80:80 front-app
+          sleep 5
           curl localhost
           docker stop my-app
 
