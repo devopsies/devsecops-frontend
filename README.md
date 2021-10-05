@@ -23,3 +23,5 @@ wget -O - --user $DOCKER_USER --password $DOCKER_TOKEN https://registry.hub.dock
 If that doesn't return anything, then we dont have that image with that tag in our Docker Hub and we can proceed to building it as usual. We'll have to use `docker login` and `docker logout` commands. In the second step, we can proceed to pulling the image `<username>/base-front:<hash>` and tagging it simply `base-front` so that the `Dockerfile` multistage build works fine.
 
 Anothing we can add at the end is to push the final resulting `nginx` container to our Docker Hub (for example `<username>/front-app:latest`).
+
+Clone this repository, host it as your own, in your Github account, then start working ;)
