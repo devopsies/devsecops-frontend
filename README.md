@@ -5,7 +5,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 In this workshop, we're going to optimize the current CI pipeline in Github Actions. The current pipeline runs one job, with three steps:
 
 <li>Build a container image based on `node` version 8 (alpine), and adding to it all required application dependencies from the `package.json` file. You can check `base.Dockerfile`.</li>
-<li>Run a multi-stage docker build in which we use the previous image to build our application and generate the frontend files (stage 1), then we move these files to an Nginx container so they can be served from there (stage2). The resulting container will be the on based on Nginx (last stage). You can check `Dockerfile`.</li>
+<li>Run a multi-stage docker build in which we use the previous image to build our application and generate the frontend files (stage 1), then we move these files to an Nginx container so they can be served from there (stage 2). The resulting container will be the on based on Nginx (last stage). You can check `Dockerfile`.</li>
 <li>We test our web app from the last container image we built by running it on port `80` and using `curl localhost`.</li>
 
 ## Tasks:

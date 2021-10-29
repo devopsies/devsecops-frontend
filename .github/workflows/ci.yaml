@@ -34,11 +34,13 @@ jobs:
           
       - name: "Test containerized app"
         run: |
-          docker run -d --name my-app -p 80:80 front-app
+          docker run -d -p 80:80 --name my-app front-app
           sleep 5
+          docker ps --all
+          docker logs my-app
           curl localhost
           docker stop my-app
-          
+
       - name: "Push containerized app"
         env:
           DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
