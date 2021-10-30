@@ -1,7 +1,8 @@
 name: project-ci
 on: [push]
 jobs:
-  run:
+# The CI job
+  CI:
     runs-on: [ubuntu-latest]
     steps:
       - uses: actions/checkout@v2
@@ -53,3 +54,37 @@ jobs:
           docker tag $DOCKER_USER/front-app:$GITHUB_RUN_NUMBER $DOCKER_USER/front-app:latest
           docker push $DOCKER_USER/front-app:latest
           docker logout
+
+# The CD job
+  CD:
+    needs: [CI]
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: "Terraform login & init"
+        env:
+          TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
+        run: |
+          cat << EOF | tee /home/runner/.terraform.d/credentials.tfrc.json > /dev/null
+          {
+            "credentials": {
+              "app.terraform.io": {
+                "token": "$TERRAFORM_TOKEN"
+              }
+            }
+          }
+          EOF
+          terraform init
+          
+      - name: "Terraform plan"
+        run: |
+          terraform plan
+          
+      - name: "Terraform apply"
+        run: |
+          terraform apply -auto-approve
+
+      - name: "Terraform logout & clean"
+        run: |
+          rm -f /home/vagrant/.terraform.d/credentials.tfrc.json
